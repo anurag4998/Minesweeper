@@ -45,7 +45,7 @@ const Square = (props) => {
             <div className = {(showNumber || showMine || showFlag || (!props.square.isMine && props.open)) ? 'open' :'closed'} onClick = { showNumber||showMine||props.open? undefined :  handleOpen} onContextMenu = {handleRightClick}>
                 { !props.square.isMine &&   ( showNumber || props.open   )? props.square.number_of_minesAround === 0 ? "" : props.square.number_of_minesAround : undefined}
                 {showMine || (props.open  && props.square.isMine )? <GiStarProminences/> : undefined}
-                {showFlag? <GiGolfFlag/> : ""}
+                {showFlag && !(props.open)? <GiGolfFlag/> : ""}
 
             </div>
 

@@ -217,7 +217,7 @@ const Structure = ({rows,columns,mines}) => {
         swal("Done","Your Board is ready", "success");
         setWon(false)
         setresetGame(0)
-      },1000) 
+      },500) 
 
      
     }
