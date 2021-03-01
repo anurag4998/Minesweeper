@@ -1,3 +1,14 @@
+.heading
+
+{
+  padding: 2rem;
+  padding-bottom: 4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 4rem;
+  color: floralwhite;
+}
 .App
 {
     height: 100%;
@@ -28,7 +39,6 @@
 .square {
 
     font-size: 2rem;
-    border: 1px solid #bbb;
 
 }
 
@@ -40,6 +50,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    border: 1px solid #a0a0a0;
 
 }
 
@@ -52,6 +63,7 @@
     justify-content: center;
     align-items: center;
     color: #444;
+    border: 1px solid #a0a0a0;
 
 }
 

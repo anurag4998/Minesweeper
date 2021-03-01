@@ -229,7 +229,10 @@ const Structure = ({rows,columns,mines}) => {
 
 
     return(
+      <>
+       
         <div className = 'container'>
+            <h1 className = 'heading'> Minesweeper </h1>
             <div className = 'grid'>
               {generatedBoard.map(x => {
                 return( 
@@ -252,6 +255,7 @@ const Structure = ({rows,columns,mines}) => {
                }
               </div>
         </div>
+      </>
     ) 
 }
 
