@@ -1,6 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { GiGolfFlag,GiStarProminences } from "react-icons/gi";
-import swal from 'sweetalert';
 
 const Square = (props) => {
    
@@ -27,14 +26,7 @@ const Square = (props) => {
         if(props.square.isMine === true)
             {
                 setShowMine(1)
-                swal("Game Over!", "You stepped on a mine", "error")
-                    .then((value) => {
-                        swal("Resetting your board");
-                        setTimeout(() => {
-                            swal("Done","Your Board is ready", "success");
-                            props.resetGame()
-                        },1000) 
-                        });
+                props.handleLoss()
                 return;
             } 
         if(props.square.number_of_minesAround === 0)
@@ -52,7 +44,7 @@ const Square = (props) => {
         <Fragment>
             <div className = {(showNumber || showMine || showFlag || (!props.square.isMine && props.open)) ? 'open' :'closed'} onClick = { showNumber||showMine||props.open? undefined :  handleOpen} onContextMenu = {handleRightClick}>
                 { !props.square.isMine &&   ( showNumber || props.open   )? props.square.number_of_minesAround === 0 ? "" : props.square.number_of_minesAround : undefined}
-                {showMine ? <GiStarProminences/> : undefined}
+                {showMine || (props.open  && props.square.isMine )? <GiStarProminences/> : undefined}
                 {showFlag? <GiGolfFlag/> : ""}
 
             </div>

@@ -19,7 +19,7 @@ const Structure = ({rows,columns,mines}) => {
     let [generatedBoard, setGeneratedBoard] = useState([])
 
     let [updated,setUpdated] = useState(0)
-    // let [resetGame, setresetGame] = useState(0)
+    let [resetGame, setresetGame] = useState(0)
 
     let [won, setWon] = useState(false)
 
@@ -33,6 +33,7 @@ const Structure = ({rows,columns,mines}) => {
  
    
 ////////////////////////////////////////////////////////////////////////////
+    //1. Generate Board
     function createBoard()
     {
    
@@ -53,7 +54,7 @@ const Structure = ({rows,columns,mines}) => {
               openedsquares[i] = false;
           }
       
-      //Generate Mines
+      //2.Generate Mines
         for(let k = 0 ; k< mines ;k++)
         {
     
@@ -69,7 +70,7 @@ const Structure = ({rows,columns,mines}) => {
     
         }
     
-      //generate numbers
+      //3.generate numbers
       for(let i = 0; i< rows ; i++)
       {
           for(let j = 0; j<columns ;j++)
@@ -126,6 +127,7 @@ const Structure = ({rows,columns,mines}) => {
         }
     }
     //////////////////////////////////////////////////////////////
+      //4.Return the board
       function ResetBoard()
       {
           board.length = 0
@@ -133,13 +135,18 @@ const Structure = ({rows,columns,mines}) => {
           createBoard()
           return board;
       }
-
+      //5.Return array ones which are opened
       function OpenedArray()
       {
           return openedsquares;
       } 
-
+      //6.Reveal all squares
+      function RevealAll()
+      {
+        openedsquares.fill(true)
+      }
     ///////////////////////////////////////////////////////////////////////
+    //7.Open squares recursively
     function handleRecursiveOpen(id) {
 
       if(id < 0 || id >rows*columns-1) return;
@@ -194,12 +201,26 @@ const Structure = ({rows,columns,mines}) => {
       return openedsquares
   }
   ///////////////////////////////////////////////////////////////////////////////////////////////////////
-    const handleReset = () => {
-      setGeneratedBoard(ResetBoard)
+    const handleLoss = () => {
+      RevealAll()
       setUpdated(!updated)
-      setWon(false)
+      setresetGame(1)
+      swal("Game Over!", "You stepped on a mine", "error")
     }
 
+    const handleReset = () => {
+      setGeneratedBoard(ResetBoard)
+
+      swal("Resetting your board");
+
+      setTimeout(() => {
+        swal("Done","Your Board is ready", "success");
+        setWon(false)
+        setresetGame(0)
+      },1000) 
+
+     
+    }
     const zeroMines = (id) => {
 
         handleRecursiveOpen(id)
@@ -239,7 +260,7 @@ const Structure = ({rows,columns,mines}) => {
                       {x.map( y => {
                         return(
                               <div key = {y.id.toString()} className = 'square' >
-                                <Square square = {y} open = {array[y.id]} click = {zeroMines} resetGame = {handleReset} countOpened = {countOpened} ></Square>
+                                <Square square = {y} open = {array[y.id]} click = {zeroMines} handleLoss = {handleLoss} countOpened = {countOpened} ></Square>
                               </div>
                             )
                         }
@@ -250,7 +271,7 @@ const Structure = ({rows,columns,mines}) => {
             
                <div className = 'row buttonholder'>
                {
-                 won ?  <button className = 'resetbtn' onClick = {handleReset}>Reset</button> : undefined
+                resetGame || won ?  <button className = 'resetbtn' onClick= {handleReset} >Reset</button> : undefined
                }
               </div>
         </div>
