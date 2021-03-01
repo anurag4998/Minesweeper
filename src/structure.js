@@ -19,7 +19,7 @@ const Structure = ({rows,columns,mines}) => {
     let [generatedBoard, setGeneratedBoard] = useState([])
 
     let [updated,setUpdated] = useState(0)
-    let [resetGame, setresetGame] = useState(0)
+    // let [resetGame, setresetGame] = useState(0)
 
     let [won, setWon] = useState(false)
 
@@ -197,7 +197,6 @@ const Structure = ({rows,columns,mines}) => {
     const handleReset = () => {
       setGeneratedBoard(ResetBoard)
       setUpdated(!updated)
-      setresetGame(0)
       setWon(false)
     }
 
@@ -240,7 +239,7 @@ const Structure = ({rows,columns,mines}) => {
                       {x.map( y => {
                         return(
                               <div key = {y.id.toString()} className = 'square' >
-                                <Square square = {y} open = {array[y.id]} click = {zeroMines} setresetGame = {setresetGame} countOpened = {countOpened} ></Square>
+                                <Square square = {y} open = {array[y.id]} click = {zeroMines} resetGame = {handleReset} countOpened = {countOpened} ></Square>
                               </div>
                             )
                         }
@@ -251,7 +250,7 @@ const Structure = ({rows,columns,mines}) => {
             
                <div className = 'row buttonholder'>
                {
-                resetGame || won?  <button className = 'resetbtn' onClick = {handleReset}>Reset</button> : undefined
+                 won ?  <button className = 'resetbtn' onClick = {handleReset}>Reset</button> : undefined
                }
               </div>
         </div>

@@ -27,8 +27,14 @@ const Square = (props) => {
         if(props.square.isMine === true)
             {
                 setShowMine(1)
-                swal("Game Over!", "You stepped on a mine!", "error");
-                props.setresetGame(1)
+                swal("Game Over!", "You stepped on a mine", "error")
+                    .then((value) => {
+                        swal("Resetting your board");
+                        setTimeout(() => {
+                            swal("Done","Your Board is ready", "success");
+                            props.resetGame()
+                        },1000) 
+                        });
                 return;
             } 
         if(props.square.number_of_minesAround === 0)
