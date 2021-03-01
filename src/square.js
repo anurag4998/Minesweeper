@@ -15,7 +15,7 @@ const Square = (props) => {
     
     const handleRightClick = (e) => {
         e.preventDefault();
-        if(showNumber || showMine || (!props.square.isMine && props.open)) return;
+        if(showNumber || showMine || (!props.square.isMine && props.square.isRevealed)) return;
         showFlag ? setShowFlag(0) : setShowFlag(1)        
     }
     
@@ -42,10 +42,10 @@ const Square = (props) => {
    
     return(
         <Fragment>
-            <div className = {(showNumber || showMine || showFlag || (!props.square.isMine && props.open)) ? 'open' :'closed'} onClick = { showNumber||showMine||props.open? undefined :  handleOpen} onContextMenu = {handleRightClick}>
-                { !props.square.isMine &&   ( showNumber || props.open   )? props.square.number_of_minesAround === 0 ? "" : props.square.number_of_minesAround : undefined}
-                {showMine || (props.open  && props.square.isMine )? <GiStarProminences/> : undefined}
-                {showFlag && !(props.open)? <GiGolfFlag/> : ""}
+            <div className = {(showNumber || showMine || showFlag || (!props.square.isMine && props.square.isRevealed)) ? 'open' :'closed'} onClick = { showNumber||showMine||props.open? undefined :  handleOpen} onContextMenu = {handleRightClick}>
+                { !props.square.isMine &&   ( showNumber || props.square.isRevealed  )? props.square.number_of_minesAround === 0 ? "" : props.square.number_of_minesAround : undefined}
+                {showMine || (props.square.isRevealed  && props.square.isMine )? <GiStarProminences/> : undefined}
+                {showFlag && !(props.square.isRevealed)? <GiGolfFlag/> : ""}
 
             </div>
 

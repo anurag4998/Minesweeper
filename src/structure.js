@@ -15,7 +15,6 @@ class square  {
 
 const Structure = ({rows,columns,mines}) => {
 
-    let [array, setArray] = useState([])
     let [generatedBoard, setGeneratedBoard] = useState([])
 
     let [updated,setUpdated] = useState(0)
@@ -23,9 +22,6 @@ const Structure = ({rows,columns,mines}) => {
 
     let [won, setWon] = useState(false)
 
-    useEffect(() => { 
-        setArray(OpenedArray)
-    },[updated])
 
     useEffect( () => {
         setGeneratedBoard(ResetBoard)
@@ -135,18 +131,19 @@ const Structure = ({rows,columns,mines}) => {
           createBoard()
           return board;
       }
-      //5.Return array ones which are opened
-      function OpenedArray()
-      {
-          return openedsquares;
-      } 
-      //6.Reveal all squares
+      //5.Reveal all squares
       function RevealAll()
       {
-        openedsquares.fill(true)
-      }
+        for(let i = 0; i< rows ; i++)
+        {
+            for(let j = 0; j<columns ;j++)
+            {
+              board[i][j].isRevealed = true
+            }
+        }
+    }
     ///////////////////////////////////////////////////////////////////////
-    //7.Open squares recursively
+    //6.Open squares recursively
     function handleRecursiveOpen(id) {
 
       if(id < 0 || id >rows*columns-1) return;
@@ -260,7 +257,7 @@ const Structure = ({rows,columns,mines}) => {
                       {x.map( y => {
                         return(
                               <div key = {y.id.toString()} className = 'square' >
-                                <Square square = {y} open = {array[y.id]} click = {zeroMines} handleLoss = {handleLoss} countOpened = {countOpened} ></Square>
+                                <Square square = {y}  click = {zeroMines} handleLoss = {handleLoss} countOpened = {countOpened} ></Square>
                               </div>
                             )
                         }
