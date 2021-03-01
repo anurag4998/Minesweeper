@@ -27,9 +27,11 @@ const Structure = ({rows,columns,mines}) => {
         setArray(OpenedArray)
     },[updated])
 
-    useEffect(() => {
-      setGeneratedBoard(ResetBoard)
-    },[])
+    useEffect( () => {
+        setGeneratedBoard(ResetBoard)
+    },[]); // eslint-disable-line react-hooks/exhaustive-deps
+ 
+   
 ////////////////////////////////////////////////////////////////////////////
     function createBoard()
     {
