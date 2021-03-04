@@ -1,10 +1,8 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState,useEffect, Fragment } from 'react';
 import swal from 'sweetalert';
 
 import Square from './square'
 
-let board = []
-let openedsquares = []
 
 class square  {
   isMine = false
@@ -12,19 +10,26 @@ class square  {
   id = 0
   isRevealed = false
 }
+let board = []
 
 const Structure = ({rows,columns,mines}) => {
 
     let [generatedBoard, setGeneratedBoard] = useState([])
-
-    let [updated,setUpdated] = useState(0)
+    let [updated,setUpdated] = useState(1)
     let [resetGame, setresetGame] = useState(0)
-
     let [won, setWon] = useState(false)
 
+    //call effect when update value changes
+    // useEffect(() => {
+        
+    //     setGeneratedBoard(board)
+    //     console.log('in second effect')
+
+    // },[updated])
 
     useEffect( () => {
         setGeneratedBoard(ResetBoard)
+        console.log('in effect')
     },[]); // eslint-disable-line react-hooks/exhaustive-deps
  
    
@@ -45,10 +50,7 @@ const Structure = ({rows,columns,mines}) => {
               board[i][j].id = _id++
               }
           }
-          for(let i=0; i < rows*columns; i++)
-          {
-              openedsquares[i] = false;
-          }
+          
       
       //2.Generate Mines
         for(let k = 0 ; k< mines ;k++)
@@ -127,7 +129,6 @@ const Structure = ({rows,columns,mines}) => {
       function ResetBoard()
       {
           board.length = 0
-          openedsquares.length = 0
           createBoard()
           return board;
       }
@@ -144,15 +145,15 @@ const Structure = ({rows,columns,mines}) => {
     }
     ///////////////////////////////////////////////////////////////////////
     //6.Open squares recursively
-    function handleRecursiveOpen(id) {
+     function handleRecursiveOpen(id) {
 
       if(id < 0 || id >rows*columns-1) return;
-      // console.log(id)
-      openedsquares[id] = true;
+       //console.log(id)
       let i = Math.floor( (id)/columns) ;
       let j = (id) % columns;
       if(board[i][j].isMine === false ) 
           board[i][j].isRevealed = true;
+
       // console.log(i,j)
           if((i+1) <=( rows - 1))
               {
@@ -193,39 +194,51 @@ const Structure = ({rows,columns,mines}) => {
   
                   }
               }
-  
-  
-      return openedsquares
+        return board;
   }
   ///////////////////////////////////////////////////////////////////////////////////////////////////////
     const handleLoss = () => {
-      RevealAll()
-      setUpdated(!updated)
+      RevealAll();
       setresetGame(1)
-      swal("Game Over!", "You stepped on a mine", "error")
+      swal("Game Over!", "You stepped on a mine", "error");
     }
 
     const handleReset = () => {
-      setGeneratedBoard(ResetBoard)
 
+      ResetBoard()
       swal("Resetting your board");
-
       setTimeout(() => {
         swal("Done","Your Board is ready", "success");
-        setWon(false)
+        setWon(false);
         setresetGame(0)
-      },500) 
 
+      },500) 
      
     }
+    //this works
     const zeroMines = (id) => {
-
-        handleRecursiveOpen(id)
-        setUpdated(!updated)
+       
+        setGeneratedBoard( handleRecursiveOpen(id))
+        setUpdated(!updated);
+       
     }
+    //  This does not work
+    // const zeroMines = (id) => {
+       
+    //     setGeneratedBoard( handleRecursiveOpen(id));
+    //    
+       
+    // }
 
+    // Why I included the update variable
+     // const zeroMines = (id) => {
+     //  
+     //       handleRecursiveOpen(id);
+     //        setUpdated(!updated);
+     //    
+    // }
     const countOpened = () => {
-      let a = board.map( x =>  {
+      let a = generatedBoard.map( x =>  {
         return(
             x.filter(y => y.isRevealed === true)
         )
@@ -242,18 +255,15 @@ const Structure = ({rows,columns,mines}) => {
          } 
           
     }
-
-
-
     return(
-      <>
+      <Fragment>
        
         <div className = 'container'>
             <h1 className = 'heading'> Minesweeper </h1>
             <div className = 'grid'>
-              {generatedBoard.map(x => {
+              {generatedBoard.map((x,index) => {
                 return( 
-                  <div className = 'row'>
+                  <div className = 'row' key = {index}>
                       {x.map( y => {
                         return(
                               <div key = {y.id.toString()} className = 'square' >
@@ -272,7 +282,7 @@ const Structure = ({rows,columns,mines}) => {
                }
               </div>
         </div>
-      </>
+      </Fragment>
     ) 
 }
 
