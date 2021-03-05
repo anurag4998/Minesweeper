@@ -5,7 +5,7 @@ function App() {
  
   return (
     <div className="App">
-        <Structure rows = {14} columns = {10} mines = {10}/>
+        <Structure rows = {14} columns = {10} mines = {14}/>
     </div>
   );
 }
