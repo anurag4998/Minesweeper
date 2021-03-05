@@ -22,7 +22,7 @@ const Square = (props) => {
    
     const handleOpen = (e) => {
     
-        if(showFlag) return
+        if(showFlag|| props.square.isRevealed) return;
         if(props.square.isMine === true)
             {
                 setShowMine(1)

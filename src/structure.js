@@ -254,6 +254,7 @@ const Structure = ({rows,columns,mines}) => {
          {
             setWon(true)
             swal("You Won!", "You found all mines!", "success");
+            setGeneratedBoard([...RevealAll()]);
          } 
           
     }
