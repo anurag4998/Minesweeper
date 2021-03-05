@@ -15,7 +15,7 @@ let board = []
 const Structure = ({rows,columns,mines}) => {
 
     let [generatedBoard, setGeneratedBoard] = useState([])
-    let [updated,setUpdated] = useState(1)
+    //let [updated,setUpdated] = useState(1)
     let [resetGame, setresetGame] = useState(0)
     let [won, setWon] = useState(false)
 
@@ -29,7 +29,7 @@ const Structure = ({rows,columns,mines}) => {
 
     useEffect( () => {
         setGeneratedBoard(ResetBoard)
-        console.log('in effect')
+        //console.log('in effect')
     },[]); // eslint-disable-line react-hooks/exhaustive-deps
  
    
@@ -142,6 +142,7 @@ const Structure = ({rows,columns,mines}) => {
               board[i][j].isRevealed = true
             }
         }
+        return board;
     }
     ///////////////////////////////////////////////////////////////////////
     //6.Open squares recursively
@@ -198,14 +199,15 @@ const Structure = ({rows,columns,mines}) => {
   }
   ///////////////////////////////////////////////////////////////////////////////////////////////////////
     const handleLoss = () => {
-      RevealAll();
+      
+      setGeneratedBoard([...RevealAll()]);
       setresetGame(1)
       swal("Game Over!", "You stepped on a mine", "error");
     }
 
     const handleReset = () => {
 
-      ResetBoard()
+      setGeneratedBoard([...ResetBoard()]);
       swal("Resetting your board");
       setTimeout(() => {
         swal("Done","Your Board is ready", "success");
@@ -218,8 +220,8 @@ const Structure = ({rows,columns,mines}) => {
     //this works
     const zeroMines = (id) => {
        
-        setGeneratedBoard( handleRecursiveOpen(id))
-        setUpdated(!updated);
+        setGeneratedBoard([...handleRecursiveOpen(id)])
+        // setUpdated(!updated);
        
     }
     //  This does not work
