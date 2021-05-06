@@ -1,12 +1,18 @@
 import './App.css';
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import Home from './home'
 import Structure from './structure'
-
-function App() {
- 
+function App() { 
+  
   return (
-    <div className="App">
-        <Structure rows = {14} columns = {10} mines = {14}/>
-    </div>
+
+    <BrowserRouter>
+      <Switch>
+        <Route exact path = "/" component = {Home} />
+        <Route path = "/game" component = {Structure} />
+
+      </Switch>
+    </BrowserRouter>       
   );
 }
 

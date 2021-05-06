@@ -12,24 +12,18 @@ class square  {
 }
 let board = []
 
-const Structure = ({rows,columns,mines}) => {
-
+const Structure = (props) => {
+    let rows = props.location.state.levels.rows;
+    let columns = props.location.state.levels.columns;;
+    let mines = props.location.state.levels.mines;;
     let [generatedBoard, setGeneratedBoard] = useState([])
-    //let [updated,setUpdated] = useState(1)
     let [resetGame, setresetGame] = useState(0)
     let [won, setWon] = useState(false)
 
-    //call effect when update value changes
-    // useEffect(() => {
-        
-    //     setGeneratedBoard(board)
-    //     console.log('in second effect')
+   
 
-    // },[updated])
-
-    useEffect( () => {
-        setGeneratedBoard(ResetBoard)
-        //console.log('in effect')
+    useEffect( () => {      
+      setGeneratedBoard(ResetBoard)
     },[]); // eslint-disable-line react-hooks/exhaustive-deps
  
    
@@ -149,13 +143,11 @@ const Structure = ({rows,columns,mines}) => {
      function handleRecursiveOpen(id) {
 
       if(id < 0 || id >rows*columns-1) return;
-       //console.log(id)
       let i = Math.floor( (id)/columns) ;
       let j = (id) % columns;
       if(board[i][j].isMine === false ) 
           board[i][j].isRevealed = true;
 
-      // console.log(i,j)
           if((i+1) <=( rows - 1))
               {
                   if(board[i+1][j].isMine === false && board[i+1][j].isRevealed !== true)
@@ -221,24 +213,9 @@ const Structure = ({rows,columns,mines}) => {
     const zeroMines = (id) => {
        
         setGeneratedBoard([...handleRecursiveOpen(id)])
-        // setUpdated(!updated);
        
     }
-    //  This does not work
-    // const zeroMines = (id) => {
-       
-    //     setGeneratedBoard( handleRecursiveOpen(id));
-    //    
-       
-    // }
-
-    // Why I included the update variable
-     // const zeroMines = (id) => {
-     //  
-     //       handleRecursiveOpen(id);
-     //        setUpdated(!updated);
-     //    
-    // }
+    
     const countOpened = () => {
       let a = generatedBoard.map( x =>  {
         return(
