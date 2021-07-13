@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch , Redirect} from "react-router-dom";
 import Home from './home'
 import Structure from './structure'
 function App() { 
@@ -8,8 +8,11 @@ function App() {
 
     <BrowserRouter>
       <Switch>
+      <Route exact path = "/">
+          {1 ? <Redirect to="/home" /> : undefined }
+      </Route>
         <Route exact path = "/home" component = {Home} />
-        <Route path = "/game" component = {Structure} />
+        <Route exact path = "/game" component = {Structure} />
 
       </Switch>
     </BrowserRouter>       
