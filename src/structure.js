@@ -1,4 +1,4 @@
-import React, { useState,useEffect, Fragment } from 'react';
+import React, { useState,useEffect } from 'react';
 import swal from 'sweetalert';
 
 import Square from './square'
@@ -236,7 +236,6 @@ const Structure = (props) => {
           
     }
     return(
-      <Fragment>
        
         <div className = 'container'>
             <h1 className = 'heading'> Minesweeper </h1>
@@ -247,7 +246,7 @@ const Structure = (props) => {
                       {x.map( y => {
                         return(
                               <div key = {y.id.toString()} className = 'square' >
-                                <Square square = {y}  click = {zeroMines} handleLoss = {handleLoss} countOpened = {countOpened} ></Square>
+                                <Square square = {y}  click = {zeroMines} handleLoss = {handleLoss} countOpened = {countOpened}></Square>
                               </div>
                             )
                         }
@@ -262,7 +261,6 @@ const Structure = (props) => {
                }
               </div>
         </div>
-      </Fragment>
     ) 
 }
 
